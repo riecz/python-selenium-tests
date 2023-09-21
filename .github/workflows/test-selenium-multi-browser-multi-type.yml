@@ -19,12 +19,9 @@ jobs:
   test-firefox:
     runs-on: ubuntu-latest
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.browser == 'firefox') || (startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '04'))
-    strategy:
-      matrix:
-        browser: [firefox]
     services:
       selenium:
-        image: selenium/standalone-${{ matrix.browser }}
+        image: selenium/standalone-firefox
         options: --shm-size=2gb
         ports:
           - 4444:4444
@@ -46,7 +43,7 @@ jobs:
         run: sudo apt-get install jq
       - name: Create and update config.json
         run: |
-          echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "${{ matrix.browser }}" '.selenium.browser = $browser' > config.json
+          echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "firefox" '.selenium.browser = $browser' > config.json
       - name: Install dependencies
         run: |
           echo "Upgrading pip..."
@@ -57,13 +54,13 @@ jobs:
         run: flake8 . --count --show-source --statistics
       - name: Run pytest with coverage and generate HTML report
         env:
-          BROWSER: ${{ matrix.browser }}
+          BROWSER: firefox
         run: pytest -s --cov=./tests/selenium/test_selenium_pom.py tests/selenium/test_selenium_pom.py -v --html=tests-report.html --capture=sys --cov-report html  --cov-report term
       - name: Archive coverage report
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: test-report-${{ matrix.browser }}-${{ github.run_number }}
+          name: test-report-firefox-${{ github.run_number }}
           path: |
             tests-report.html
             htmlcov/
@@ -72,12 +69,9 @@ jobs:
   test-chrome:
     runs-on: ubuntu-latest
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.browser == 'chrome') || (startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '05'))
-    strategy:
-      matrix:
-        browser: [chrome]
     services:
       selenium:
-        image: selenium/standalone-${{ matrix.browser }}
+        image: selenium/standalone-chrome
         options: --shm-size=2gb
         ports:
           - 4444:4444
@@ -99,7 +93,7 @@ jobs:
         run: sudo apt-get install jq
       - name: Create and update config.json
         run: |
-          echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "${{ matrix.browser }}" '.selenium.browser = $browser' > config.json
+          echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "chrome" '.selenium.browser = $browser' > config.json
       - name: Install dependencies
         run: |
           echo "Upgrading pip..."
@@ -110,13 +104,13 @@ jobs:
         run: flake8 . --count --show-source --statistics
       - name: Run pytest with coverage and generate HTML report
         env:
-          BROWSER: ${{ matrix.browser }}
+          BROWSER: chrome
         run: pytest -s --cov=./tests/selenium/test_selenium_pom.py tests/selenium/test_selenium_pom.py -v --html=tests-report.html --capture=sys --cov-report html  --cov-report term
       - name: Archive coverage report
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: test-report-${{ matrix.browser }}-${{ github.run_number }}
+          name: test-report-chrome-${{ github.run_number }}
           path: |
             tests-report.html
             htmlcov/
