@@ -13,8 +13,8 @@ def test_login(driver):
     """
     print("Testing login functionality...")
     login_page = LoginPage(driver)
-    driver.save_screenshot("screenshots/step1.jpg")
+    driver.save_screenshot("screenshots/step1.png")
     login_page.login()
-    driver.save_screenshot("screenshots/step2.jpg")
+    driver.save_screenshot("screenshots/step2.png")
     assert driver.current_url == home_page_url
     print("Login test passed!")
