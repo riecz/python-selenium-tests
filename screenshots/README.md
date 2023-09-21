@@ -1,1 +1,0 @@
-### Screenshots for the different steps of the test
