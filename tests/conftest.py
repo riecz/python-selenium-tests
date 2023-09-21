@@ -9,10 +9,10 @@ from src.config import config
 
 @pytest.fixture(scope="function")
 def driver():
-    is_local = config["isLocal"]
+    local = config["local"]
     driver_manager = DriverManager()
-    if is_local:
-        driver_instance = driver_manager.get_driver_local()
+    if local:
+        driver_instance = driver_manager.get_driver(local=True)
     else:
         driver_instance = driver_manager.get_driver()
     yield driver_instance
