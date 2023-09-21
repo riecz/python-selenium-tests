@@ -5,7 +5,7 @@ In order to run tests with selenium, you either need to have a webbrowser instal
 
 If you do the development on Window, you might need to install a (Firefox) webdriver: gecko driver, found at: https://github.com/mozilla/geckodriver/releases
 
-Beside that, simply do `pip install -r requirements.txt` and the needed Selenium package will be installed.
+Beside that, simply do ``` pip install -r requirements.txt``` and the needed Selenium package will be installed.
 
 Below are the key components related to Selenium:
 
@@ -25,7 +25,7 @@ The Locators class provides a centralized location for all the locators used in 
 This file contains a test to validate the login functionality of a web application. The test navigates to the login page, inputs the credentials, and verifies successful login by checking the URL of the landing page.
 
 #### 6. GitHub Workflows
-There are two GitHub action workflows set up for running Selenium tests:
+There are two GitHub action workflows set up for running Selenium tests under ```/tests/selenium/test_selenium_pom.py``` :
 - Single Browser Test Workflow: This workflow allows you to run tests on a single browser (either Firefox or Chrome) of your choice.
 - Multi-Browser Test Workflow: This workflow runs tests on multiple browsers (Firefox and Chrome) simultaneously.
 
