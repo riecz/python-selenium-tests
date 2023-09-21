@@ -9,6 +9,7 @@ on:
         required: true
         options:
           - firefox
+          - chrome
 
 jobs:
   test:
