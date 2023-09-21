@@ -1,5 +1,5 @@
-### Selenium Integration for Testing
-This repository contains a comprehensive Selenium integration for testing web applications. 
+### Selenium Testing using POM
+This repository contains a comprehensive Selenium integration for testing web applications using the Page Object Model design pattern. 
 
 In order to run tests with selenium, you either need to have a webbrowser installed on your machine and a webdriver.
 
