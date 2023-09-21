@@ -1,11 +1,14 @@
 from selenium import webdriver
+import geckodriver_autoinstaller
 
 
 class DriverManager:
 
     def get_driver(self):
         """Initialize and return a Firefox webdriver instance."""
+        geckodriver_autoinstaller.install()
         driver = webdriver.Firefox()
+
         print("Driver instance:", driver)
         return driver
 

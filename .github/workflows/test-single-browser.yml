@@ -50,7 +50,8 @@ jobs:
         python -m pip install --upgrade pip
         echo "Installing requirements..."
         pip install -r requirements.txt
-
+        echo "Installing xvfb..."
+        run: sudo apt-get install xvfb
     # This step runs flake8 for linting
     - name: Run flake8 linting
       run: |
