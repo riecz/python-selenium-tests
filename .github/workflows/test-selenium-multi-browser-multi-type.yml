@@ -1,5 +1,5 @@
 name: test-selenium-multi-browser-multi-type
-run-name: test-selenium-multi-browser-multi-type-${{ github.run_number }}
+run-name: test-selenium-multi-browser-multi-type-${{ github.event.inputs.browser }}-${{ github.run_number }}
 
 on:
   workflow_dispatch:
