@@ -2,6 +2,6 @@
   "url": "https://practicetestautomation.com/practice-test-login/",
   "username": "student",
   "password": "Password123",
-  "browser": "firefox",
+  "browser": "chrome",
   "isLocal": false
 }
