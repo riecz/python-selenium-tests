@@ -4,14 +4,12 @@
 # '''
 import pytest
 from src.common.selenium.drivers.driver_manager import DriverManager
-from dotenv import load_dotenv
-import os
+from src.config import config
 
 
 @pytest.fixture(scope="function")
 def driver():
-    load_dotenv()
-    is_local = os.environ.get("LOCAL", "False")
+    is_local = config["isLocal"]
     driver_manager = DriverManager()
     if is_local:
         driver_instance = driver_manager.get_driver_local()

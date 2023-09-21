@@ -1,14 +1,12 @@
 from selenium import webdriver
 from selenium.webdriver import FirefoxOptions, ChromeOptions
-from dotenv import load_dotenv
-import os
+from src.config import config
 
 
 class DriverManager:
-    load_dotenv()
 
     def __init__(self):
-        self.browser_name = os.environ.get("BROWSER", "firefox")
+        self.browser_name = config["browser"]
 
     def get_driver(self):
         """Initialize and return a webdriver instance based on the browser name."""
