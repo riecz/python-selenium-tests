@@ -15,23 +15,26 @@ on:
     - cron: '0 4-5 * * *' # This workflow runs at 4am for Firefox and 5am for Chrome
 
 jobs:
-
-  test-chrome:
+  test:
     runs-on: ubuntu-latest
-    if: (github.event_name == 'workflow_dispatch' && github.event.inputs.browser == 'chrome') || (startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '05'))
+    strategy:
+      matrix:
+        browser: [firefox, chrome]
     services:
       selenium:
-        image: selenium/standalone-chrome
+        image: selenium/standalone-${{ matrix.browser }}
         options: --shm-size=2gb
         ports:
           - 4444:4444
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+
       - name: Set up Python 3.10
         uses: actions/setup-python@v3
         with:
           python-version: "3.10"
+
       - name: Cache pip packages
         uses: actions/cache@v3
         id: cache
@@ -39,28 +42,40 @@ jobs:
           path: ~/.cache/pip
           key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
           restore-keys: ${{ runner.os }}-pip-
+
       - name: Install jq
         run: sudo apt-get install jq
-      - name: Create and update config.json
+
+      - name: Create and update config.json for Chrome
+        if: (matrix.browser == 'chrome' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'chrome' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '05'))
         run: |
-          echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "chrome" '.selenium.browser = $browser' > config.json
+          echo '${{ secrets.CONFIG_JSON }}' | jq --arg browser "chrome" '.selenium.browser = $browser' > config.json
+
+      - name: Create and update config.json for Firefox
+        if: (matrix.browser == 'firefox' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'firefox' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '04'))
+        run: |
+          echo '${{ secrets.CONFIG_JSON }}' | jq --arg browser "firefox" '.selenium.browser = $browser' > config.json
+
       - name: Install dependencies
         run: |
           echo "Upgrading pip..."
           python -m pip install --upgrade pip
           echo "Installing requirements..."
           pip install -r requirements.txt
+
       - name: Run flake8 linting
         run: flake8 . --count --show-source --statistics
+
       - name: Run pytest with coverage and generate HTML report
         env:
-          BROWSER: chrome
+          BROWSER: ${{ matrix.browser }}
         run: pytest -s --cov=./tests/selenium/test_selenium_pom.py tests/selenium/test_selenium_pom.py -v --html=tests-report.html --capture=sys --cov-report html  --cov-report term
+
       - name: Archive coverage report
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: test-report-chrome-${{ github.run_number }}
+          name: test-report-${{ matrix.browser }}-${{ github.run_number }}
           path: |
             tests-report.html
             htmlcov/
