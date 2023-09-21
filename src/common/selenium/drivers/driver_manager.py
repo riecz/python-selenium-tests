@@ -7,7 +7,7 @@ class DriverManager:
     def install_driver(self):
         """Install the latest Firefox webdriver."""
         geckodriver_autoinstaller.install()
-        
+
     def get_driver(self):
         """Initialize and return a Firefox webdriver instance."""
         driver = webdriver.Firefox()
