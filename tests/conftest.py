@@ -11,7 +11,7 @@ import os
 @pytest.fixture(scope="function")
 def driver():
     load_dotenv()
-    is_local = os.environ["LOCAL"]
+    is_local = os.environ.get("LOCAL", "False")
     driver_manager = DriverManager()
     if is_local:
         driver_instance = driver_manager.get_driver_local()

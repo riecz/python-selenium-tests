@@ -8,7 +8,7 @@ class DriverManager:
     load_dotenv()
 
     def __init__(self):
-        self.browser_name = os.environ["BROWSER"]
+        self.browser_name = os.environ.get("BROWSER", "firefox")
 
     def get_driver(self):
         """Initialize and return a webdriver instance based on the browser name."""
