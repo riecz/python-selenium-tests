@@ -1,0 +1,6 @@
+[flake8]
+exclude =
+    automation,
+    venv,
+    env
+max-line-length = 130
