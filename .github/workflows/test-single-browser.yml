@@ -61,6 +61,7 @@ jobs:
     - name: Run pytest with coverage and generate HTML report
       env:
         BROWSER: ${{ github.event.inputs.browser }}
+        LOCAL: "false"
       run: | 
         echo "Running tests with pytest..."
         pytest -s --cov=./tests/selenium/ tests/selenium/ -v --html=tests-report.html --capture=sys --cov-report html  --cov-report term
