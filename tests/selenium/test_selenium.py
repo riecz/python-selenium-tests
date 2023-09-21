@@ -3,6 +3,7 @@ from src.config import config
 
 # Configuration values for the tests
 page_url = config["url"]
+home_page_url = "https://practicetestautomation.com/logged-in-successfully/"
 
 
 def test_login(driver):
@@ -12,5 +13,5 @@ def test_login(driver):
     print("Testing login functionality...")
     login_page = LoginPage(driver)
     login_page.login()
-    assert driver.current_url == "https://practicetestautomation.com/logged-in-successfully/"
+    assert driver.current_url == home_page_url
     print("Login test passed!")

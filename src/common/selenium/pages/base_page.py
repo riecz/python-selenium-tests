@@ -30,6 +30,7 @@ class BasePage:
 
     def navigate_to_by_element(self, locator):
         """
-        Navigates to a page by clicking on an element identified by the provided locator.
+        Navigates to a page by clicking on an element identified
+        by the provided locator.
         """
         self.find_element(*locator).click()

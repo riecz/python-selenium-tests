@@ -1,12 +1,3 @@
-'''
-Setup pconf config source hierarchy as:
-  1. Environment variables (hierarchical environment variables are identified by __)
-     Example: environment variable "mq__username" will be imported to config['mq']['username']
-  2. A config.json file located in the root folder
-  3. An environment specific JSON config file. Default file is /config/cil-test-config.json but if these
-     tests are used for another environment, the environment variable (or config.json property) envConfigFilename
-     can be used to specify which extra config file that should be read and added to the configuration.
-'''
 import os
 from pconf import Pconf
 from src.api.file_reader import read_json_file
@@ -17,7 +8,8 @@ Pconf.env()
 
 def load_config_file(filename):
     '''
-    This function assumes that 'filename' is the full path to a json file that is to be used to load into Pconf
+    This function assumes that 'filename' is the full path to a json file that
+    is to be used to load into Pconf
     to get all the configuration variables from that file
     '''
 
@@ -25,12 +17,16 @@ def load_config_file(filename):
 # Load the default config.json file
 config_file = os.path.join(os.path.dirname(__file__), '../config.json')
 if not os.path.isfile(config_file):
-    print('Warning: Could not find configuration file \'{file}\''.format(file=config_file))
+    print('Warning: Could not find configuration file \'{file}\''.format(
+        file=config_file))
 else:
     try:
-        read_json_file(config_file)  # Check that the file is correct json format
+        # Check that the file is correct json format
+        read_json_file(config_file)
     except ValueError:
-        raise Exception('\'{file}\' is not a valid json file. Please check the format'.format(file=config_file))
+        raise Exception(
+            '\'{file}\' is not a valid json file. Please check the format'
+            .format(file=config_file))
     print('Loading config file \'{filename}\''.format(filename=config_file))
     Pconf.file(config_file, encoding='json')
 

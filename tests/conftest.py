@@ -1,5 +1,6 @@
 # '''
-# The function in this file will run before the tests are run. Add all pre-execution logic into that function
+# The function in this file will run before the tests are run.
+# Add all pre-execution logic into that function
 # '''
 import pytest
 from src.common.selenium.drivers.driver_manager import DriverManager

@@ -8,7 +8,8 @@ class XmlTransformer():
 
     def replace(self, xml_text: str, path: str, value: str):
         '''
-        This function takes an xml string and replaces the value for a certain field.
+        This function takes an xml string and
+        replaces the value for a certain field.
         Example:
         - xml_text:
           <a>
@@ -18,7 +19,8 @@ class XmlTransformer():
           </<a>
         - key: '/a/b/c'
         - value: 'World'
-        Running the replace function with above parameters should result in the following text:
+        Running the replace function with above parameters
+        should result in the following text:
           <a>
             <b>
               <c>World</c>

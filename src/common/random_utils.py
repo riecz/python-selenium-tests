@@ -1,5 +1,6 @@
 '''
-This file contain functionality to random generate various types of data, for example fyons.
+This file contain functionality to random generate various types of data,
+for example fyons.
 '''
 import random
 

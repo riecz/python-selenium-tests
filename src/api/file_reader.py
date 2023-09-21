@@ -13,7 +13,8 @@ def read_json_file(file_path):
 
     # Check if the JSON file exists
     if not os.path.exists(rel_path):
-        raise FileNotFoundError("File '{path}' does not exist.".format(path=rel_path))
+        raise FileNotFoundError(
+            "File '{path}' does not exist.".format(path=rel_path))
 
     # Open and read the JSON file
     with open(rel_path, 'r', encoding='utf-8') as file:
@@ -32,7 +33,8 @@ def read_xml_file(file_path):
 
     # Check if the XML file exists
     if not os.path.exists(file_path):
-        raise FileNotFoundError("File '{path}' does not exist.".format(path=file_path))
+        raise FileNotFoundError(
+            "File '{path}' does not exist.".format(path=file_path))
 
     # Open and read the XML file
     with open(rel_path, 'r', encoding='utf-8') as file:
@@ -43,12 +45,14 @@ def read_xml_file(file_path):
 
 def read_expected_xml_message(file_path, replacement_elements: dict = {}):
     """
-    This function reads the data from xml file and returns into a dictionary format.
+    This function reads the data from xml file
+    and returns into a dictionary format.
     """
 
     # Check if the expected response file exists
     if not os.path.exists(file_path):
-        raise FileNotFoundError("File '{path}' does not exist.".format(path=file_path))
+        raise FileNotFoundError(
+            "File '{path}' does not exist.".format(path=file_path))
 
     else:
         tree = ET.parse(file_path)
@@ -86,7 +90,8 @@ def read_expected_xml_message(file_path, replacement_elements: dict = {}):
 
 def read_actual_xml_message(actual_message, replacement_elements: dict = {}):
     """
-    This function reads the data from xml content and returns into a dictionary format.
+    This function reads the data from xml content
+    and returns into a dictionary format.
     """
 
     if not actual_message:
@@ -129,13 +134,16 @@ def read_actual_xml_message(actual_message, replacement_elements: dict = {}):
 
 def compare_xml_attributes(xml_file_1, xml_file_2, attribute_1, attribute_2):
     """
-    This function compares 2 attributes in 2 distinct xml messages and returns a boolean value.
+    This function compares 2 attributes in 2
+    distinct xml messages and returns a boolean value.
     """
 
     # Extract the attributes
-    attribute_1_value = get_attribute_value_from_xml_string(xml_file_1, attribute_1)
+    attribute_1_value = get_attribute_value_from_xml_string(
+        xml_file_1, attribute_1)
     print("attribute_1_value: ", attribute_1_value)
-    attribute_2_value = get_attribute_value_from_xml_string(xml_file_2, attribute_2)
+    attribute_2_value = get_attribute_value_from_xml_string(
+        xml_file_2, attribute_2)
     print("attribute_2_value: ", attribute_2_value)
 
     # Check if attributes are found and compare their values
@@ -152,7 +160,8 @@ def get_attribute_value_from_xml_string(xml_string, path):
     try:
         tree = ET.fromstring(xml_string)
         element = tree.find(path)
-        return element.text.strip() if element is not None and element.text else None
+        result = element.text.strip()
+        return result if element is not None and element.text else None
     except ET.ParseError:
         print("Error parsing XML content.")
         return False
