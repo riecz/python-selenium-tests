@@ -43,6 +43,15 @@ jobs:
         key: ${{ runner.os }}-pip-${{ hashFiles('**/requirements.txt') }}
         restore-keys: | 
           ${{ runner.os }}-pip-
+       
+    # This step installs jq, a lightweight and flexible command-line JSON processor
+    - name: Install jq to be able to modify the config.json file
+      run: sudo apt-get install jq
+
+    # This step creates a config.json file and updates it with the access token
+    - name: Create and update config.json
+      run: |
+        echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "${{ github.event.inputs.browser }}" '.browser = $browser' > config.json
         
     # This step installs necessary dependencies as per requirements.txt
     - name: Install dependencies
