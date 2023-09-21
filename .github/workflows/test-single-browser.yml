@@ -52,7 +52,7 @@ jobs:
     # This step creates a config.json file and updates it with the access token
     - name: Create and update config.json
       run: |
-        echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "${{ github.event.inputs.browser }}" '.browser = $browser' > config.json
+        echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "${{ github.event.inputs.browser }}" '.selenium.browser = $browser' > config.json
         
     # This step installs necessary dependencies as per requirements.txt
     - name: Install dependencies

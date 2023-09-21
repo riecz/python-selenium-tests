@@ -9,7 +9,7 @@ from src.config import config
 
 @pytest.fixture(scope="function")
 def driver():
-    local = config["local"]
+    local = config["selenium"]["local"]
     driver_manager = DriverManager()
     if local:
         driver_instance = driver_manager.get_driver(local=True)

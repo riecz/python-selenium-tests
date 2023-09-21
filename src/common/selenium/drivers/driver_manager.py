@@ -7,7 +7,7 @@ class DriverManager:
 
     def __init__(self):
         self.remote_url = config["selenium"]["remote_url"]
-        self.browser_name = config["browser"]
+        self.browser_name = config["selenium"]["browser"]
         self.browser_options_map = {
             "firefox": FirefoxOptions,
             "chrome": ChromeOptions
