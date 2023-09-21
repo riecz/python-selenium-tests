@@ -1,5 +1,5 @@
 name: Test Selenium (single)
-run-name: Test Selenium ${{ github.event.inputs.browser }} by @${{ github.actor }}
+run-name: Test Selenium using ${{ github.event.inputs.browser }} by @${{ github.actor }}
 
 on:
   workflow_dispatch:
