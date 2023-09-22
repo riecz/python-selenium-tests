@@ -3,7 +3,7 @@ run-name: test-selenium-multi-browser-${{ github.run_number }}
 
 on:
   schedule:
-    - cron: '*/5 * * * *' # This workflow runs once a month
+    - cron: '0 0 1 * *' # This workflow runs once a month
 
 jobs:
   test:
