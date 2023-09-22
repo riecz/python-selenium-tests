@@ -1,4 +1,4 @@
-name: test-selenium-multi-browser-multi-type
+name: test-selenium-multi-browser-multi-type-dev
 run-name: test-selenium-multi-browser-multi-type-${{ github.event.inputs.browser }}-${{ github.run_number }}
 
 on:
