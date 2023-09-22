@@ -1,5 +1,5 @@
-name: test-selenium-multi-browser-
-run-name: test-selenium-multi-browser-${{ github.run_number }}
+name: test-selenium-multi-browser-manual
+run-name: test-selenium-multi-browser-manual-${{ github.run_number }}
 
 on:
   workflow_dispatch:
