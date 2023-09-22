@@ -17,8 +17,8 @@ on:
 jobs:
   
   test-firefox:
-    runs-on: ubuntu-latest
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.browser == 'firefox') || (startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '04'))
+    runs-on: ubuntu-latest
     services:
       selenium:
         image: selenium/standalone-firefox
@@ -67,8 +67,8 @@ jobs:
             screenshots/
 
   test-chrome:
-    runs-on: ubuntu-latest
     if: (github.event_name == 'workflow_dispatch' && github.event.inputs.browser == 'chrome') || (startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '05'))
+    runs-on: ubuntu-latest
     services:
       selenium:
         image: selenium/standalone-chrome
