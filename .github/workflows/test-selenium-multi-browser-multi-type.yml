@@ -47,12 +47,12 @@ jobs:
         run: sudo apt-get install jq
 
       - name: Create and update config.json for Chrome
-        if: (matrix.browser == 'chrome' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'chrome' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '05'))
+        if: (github.event.inputs.browser == 'chrome' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'chrome' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '05'))
         run: |
           echo '${{ secrets.CONFIG_JSON }}' | jq --arg browser "chrome" '.selenium.browser = $browser' > config.json
 
       - name: Create and update config.json for Firefox
-        if: (matrix.browser == 'firefox' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'firefox' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '04'))
+        if: (github.event.inputs.browser == 'firefox' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'firefox' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '04'))
         run: |
           echo '${{ secrets.CONFIG_JSON }}' | jq --arg browser "firefox" '.selenium.browser = $browser' > config.json
 
