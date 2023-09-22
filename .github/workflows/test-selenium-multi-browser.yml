@@ -1,5 +1,5 @@
-name: test-selenium-multi-browser-simultaneous
-run-name: test-selenium-multi-browser-simultaneous-${{ github.run_number }}
+name: test-selenium-multi-browser
+run-name: test-selenium-multi-browser-${{ github.run_number }}
 
 on:
   schedule:
