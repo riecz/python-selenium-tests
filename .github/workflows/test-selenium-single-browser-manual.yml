@@ -1,4 +1,4 @@
-name: test-selenium-single-browser
+name: test-selenium-single-browser-manual
 run-name: test-selenium-${{ github.event.inputs.browser }}-${{ github.run_number }}
 
 on:
