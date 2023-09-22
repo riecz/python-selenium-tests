@@ -1,4 +1,4 @@
-name: test-selenium-multi-browser
+name: test-selenium-multi-browser-
 run-name: test-selenium-multi-browser-${{ github.run_number }}
 
 on:
