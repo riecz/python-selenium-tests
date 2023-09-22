@@ -15,7 +15,17 @@ on:
     - cron: '0 4-5 * * *' # This workflow runs at 4am for Firefox and 5am for Chrome
 
 jobs:
+  setup:
+    runs-on: ubuntu-latest
+    outputs:
+      current-hour: ${{ steps.get-hour.outputs.current-hour }}
+    steps:
+    - name: Get current hour
+      id: get-hour
+      run: echo "::set-output name=current-hour::$(date +'%H')"
+
   test:
+    needs: setup
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -46,15 +56,10 @@ jobs:
       - name: Install jq
         run: sudo apt-get install jq
 
-      - name: Create and update config.json for Chrome
-        if: (github.event.inputs.browser == 'chrome' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'chrome' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '05'))
+      - name: Create and update config.json
+        if: (matrix.browser == 'chrome' && (github.event_name == 'workflow_dispatch' && github.event.inputs.browser == 'chrome')) || (matrix.browser == 'chrome' && needs.setup.outputs.current-hour == '05') || (matrix.browser == 'firefox' && (github.event_name == 'workflow_dispatch' && github.event.inputs.browser == 'firefox')) || (matrix.browser == 'firefox' && needs.setup.outputs.current-hour == '04')
         run: |
-          echo '${{ secrets.CONFIG_JSON }}' | jq --arg browser "chrome" '.selenium.browser = $browser' > config.json
-
-      - name: Create and update config.json for Firefox
-        if: (github.event.inputs.browser == 'firefox' && github.event_name == 'workflow_dispatch') || (matrix.browser == 'firefox' && startsWith(format('{{ "{0,date,HH}" }}', github.event.schedule), '04'))
-        run: |
-          echo '${{ secrets.CONFIG_JSON }}' | jq --arg browser "firefox" '.selenium.browser = $browser' > config.json
+          echo '${{ secrets.CONFIG_JSON }}' | jq --arg browser "${{ matrix.browser }}" '.selenium.browser = $browser' > config.json
 
       - name: Install dependencies
         run: |
