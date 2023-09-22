@@ -3,18 +3,18 @@ run-name: test-selenium-multi-browser-simultaneous-${{ github.run_number }}
 
 on:
   schedule:
-    - cron: '0 4 * * *' # This workflow runs at 4am
+    - cron: '*/5 * * * *' # This workflow runs at 4am
 
 jobs:
   test:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        test-case: [firefox, chrome]
+        browser: [firefox, chrome]
       fail-fast: false
     services:
       selenium:
-        image: selenium/standalone-${{ matrix.test-case }}
+        image: selenium/standalone-${{ matrix.browser }}
         options: --shm-size=2gb
         ports:
           - 4444:4444
@@ -36,7 +36,7 @@ jobs:
         run: sudo apt-get install jq
       - name: Create and update config.json
         run: |
-          echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "${{ matrix.test-case }}" '.selenium.browser = $browser' > config.json
+          echo '${{ vars.CONFIG_JSON }}' | jq --arg browser "${{ matrix.browser }}" '.selenium.browser = $browser' > config.json
       - name: Install dependencies
         run: |
           echo "Upgrading pip..."
@@ -47,13 +47,13 @@ jobs:
         run: flake8 . --count --show-source --statistics
       - name: Run pytest with coverage and generate HTML report
         env:
-          BROWSER: ${{ matrix.test-case }}
+          BROWSER: ${{ matrix.browser }}
         run: pytest -s --cov=./tests/selenium/test_selenium_pom.py tests/selenium/test_selenium_pom.py -v --html=tests-report.html --capture=sys --cov-report html  --cov-report term
       - name: Archive coverage report
         uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: test-report-${{ matrix.test-case }}-${{ github.run_number }}
+          name: test-report-${{ matrix.browser }}-${{ github.run_number }}
           path: |
             tests-report.html
             htmlcov/
